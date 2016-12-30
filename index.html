@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vue JS - Example</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.min.js"></script>
+    <script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+        <h1> {{ message }} </h1>
+        <input type="text" v-model="message">
+    </div>
+    <div class="food">
+      <ul>
+        <li v-for="food in food_items"> {{ food }} </li>
+      </ul>
+
+      <ol>
+        <food-item v-for="food in food_items" :food="food"></food-item>
+      </ol>
+      <button @click="buttonClick()">Click</button>
+    </div>
+
+    <script type="text/javascript">
+      new Vue({
+        el: '#app',
+        data: {
+          'message': 'Hello world vue js',
+        }
+      })
+
+      Vue.component('food-item', {
+        props: ['food'],
+        template: '<li style="color: #010101; font-family: tahoma, Arail; font-size: 20px;">{{ food }}</li>'
+      })
+
+      new Vue({
+        el: '.food',
+        data: {
+          'food_items': ['hambuger', 'pizza', 'sandwich', 'hotdog']
+        },
+        methods: {
+          'buttonClick': () => { console.log('hi') }
+        }
+      })
+    </script>
+  </body>
+</html>
