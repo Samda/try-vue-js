@@ -3,13 +3,23 @@
   <head>
     <title>Vue JS - Example</title>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.min.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
     <script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
   </head>
   <body>
     <div id="app">
-        <h1> {{ message }} </h1>
-        <input type="text" v-model="message">
+        <h1>Hello App!</h1>
+        <p>
+          <!-- use router-link component for navigation. -->
+          <!-- specify the link by passing the `to` prop. -->
+          <!-- <router-link> will be rendered as an `<a>` tag by default -->
+          <router-link to="/foo/1">Go to Foo</router-link>
+          <router-link to="/bar/2">Go to Bar</router-link>
+        </p>
+        <!-- route outlet -->
+        <!-- component matched by the route will render here -->
+        <router-view></router-view>
     </div>
     <div class="food">
       <ul>
@@ -23,12 +33,27 @@
     </div>
 
     <script type="text/javascript">
-      new Vue({
-        el: '#app',
-        data: {
-          'message': 'Hello world vue js',
-        }
+      const Foo = { template: '<div>foo {{ $route.params.id }}</div>' }
+      const Bar = { template: '<div>bar {{ $route.params.id }}</div>' }
+      const routes = [
+        { path: '/foo/:id', component: Foo },
+        { path: '/bar/:id', component: Bar }
+      ]
+
+      const router = new VueRouter({
+        routes // short for routes: routes
       })
+
+      const app = new Vue({
+        router
+      }).$mount('#app')
+
+      // new Vue({
+      //   el: '#app',
+      //   data: {
+      //     'message': 'Hello world vue js',
+      //   }
+      // })
 
       Vue.component('food-item', {
         props: ['food'],
